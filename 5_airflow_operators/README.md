@@ -6,17 +6,22 @@ An operator describes a single task in a workflow. Operators are usually (but no
 
 There are over 100 operators shipped with Airflow. Airflow operators can be broadly categorized into three categories.
 
+---
+
 ### Action Operators:
 
 The action operators perform some action such as executing a Python function or submitting a Spark Job.
 
  (e.g.) BashOperator, PythonOperator, DockerOperator, OracleOperator
 
+---
 ### Sensor Operators:
 
 The Sensor operators trigger downstream tasks in the dependency graph when a specific criterion is met, for example checking for a particular file becoming available on S3 before using it downstream. Sensors are a dominant feature of Airflow allowing us to create complex workflows and efficiently manage their preconditions.
 
 (e.g.) S3KeySensors, HivePartitionSensor, ExternalTaskSensor, TimeSensor
+
+---
 
 ### Transfer Operators:
 
@@ -25,30 +30,15 @@ Transfer Operators move data between systems such as from Hive to Mysql or from 
 (e.g.) GenericTransfer,MsSqlToHiveTransfer, RedshiftToS3Transfer
 
 
-
+---
 ### Operator Properties:
 
 | Property                    | Desc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Default                |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
 | dag                         | a reference to the dag the task is attached to                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Mandatory param        |
 | task_id                     | a unique, meaningful id for the task                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Mandatory param        |
-| email                       | email to send notification if any                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | None                   |
-| email_on_retry              | boolean flag to send email on the task retry                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | True                   |
-| email_on_failure            | boolean flag to send email on the task failure                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | True                   |
-| retries                     | the number of retries that should be performed before failing the task                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 0                      |
-| retry_delay                 | delay between retries                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | timedelta(seconds=300) |
-| retry_exponential_backoff   | maximum delay interval between retries                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | False                  |
-| depends_on_past             | when set to true, task instances will run sequentially while relying on the previous task's schedule to succeed. The task instance for the start_date is allowed to run.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | False                  |
-| adhoc                       | Mark the task as `adhoc`. Adhoc tasks used for performing certain task-specific on demand                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | False                  |
-| params                      | Parameters / variables pass to airflow task instances                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | None                   |
-| priority_weight             | priority weight of this task against other task. This allows the executor to trigger higher priority tasks before others when things get backed up.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 1                      |
-| pool                        | the slot pool this task should run in, slot pools are a way to limit concurrency for certain tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | None                   |
-| sla                         | time by which the job is expected to succeed. Note that this represents the \`\`timedelta\`\` after the period is closed. For example if you set an SLA of 1 hour, the scheduler would send dan email soon after `1:00AM` on the `2016-01-02` if the `2016-01-01` instance has not succeeded yet. The scheduler pays special attention for jobs with an SLA and sends alert emails for sla misses. SLA misses are also recorded in the database for future reference. All tasks that share the same SLA time get bundled in a single email, sent soon after that time. SLA notification are sent once and only once for each task instance.    | None                   |
-| execution_timeout           | max time allowed for the execution of this task instance, if it goes beyond it will raise and fail.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | None                   |
-| task_concurrency            | When set, a task will be able to limit the concurrent runs across execution_dates                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | None                   |
-
-
-
+| email                       | email to send notification if any                                    | Mandatory param        |                                                                                                                                                                                                                                                                                                             
+---
 ### Bash Operators:
 
 Execute a Bash script, command or set of commands. (e.g.) Bash Operator to clean /tmp files periodically. 
@@ -60,7 +50,7 @@ clean_tmp_dir = BashOperator(
     dag='cleaner_dag'
 )
 ```
-
+---
 ### Python Operators:
 
 Executes a Python callable method.
@@ -77,7 +67,7 @@ for i in range(10): # loop in to create dynamic operators.
         op_kwargs={'random_base': float(i) / 10}, # pass the method argument here
         dag=dag)
 ```
-
+---
 ### Branch Operators:
 
 Allows a workflow to "branch" or follow a single path following the execution of this task.
@@ -90,7 +80,7 @@ branching = BranchPythonOperator(
     python_callable=lambda: random.choice(options),
     dag=dag)
 ```
-
+---
 ### Short Circuit Operators:
 
 Allows a workflow to continue only if a condition is met. Otherwise, the  
@@ -110,14 +100,14 @@ cond_true = ShortCircuitOperator(
 cond_false = ShortCircuitOperator(
     task_id='condition_is_False', python_callable=lambda: False, dag=dag)
 ```
-
+---
 ### Running individual tasks:
 
-```powershell
+```bash
 airflow test <dag_id> <task_id> <execution date> (or)
 airflow test -tp {'param1': 'my_param'} <dag_id> <task_id> <execution_date>
 ```
-
+---
 ### Writing custom Operators:
 
 It's very simple, extend the `BaseOperator` class and `override` the contructor and the `execute` method.
