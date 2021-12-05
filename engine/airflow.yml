@@ -10,6 +10,7 @@ content:
 - ../slides/concepts.md
 - ../slides/install.md
 - ../slides/ui.md
+- ../slides/our_first_dag.md
 - ../slides/scheduler.md
 - ../slides/operators.md
 - ../slides/advanced_concepts.md

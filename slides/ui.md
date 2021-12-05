@@ -1,51 +1,58 @@
 # Airflow UI
 
-The Airflow UI makes it easy to monitor and troubleshoot your data pipelines.
+The Airflow UI makes it easy to:
 
+-  Monitor and troubleshoot your data pipelines.
+-  Configure Airflow integrations
+
+---
 ### DAG View:
 
 List of the DAGs in your environment, and a set of shortcuts to useful pages. You can see exactly how many tasks succeeded, failed, or are currently running at a glance.
 
-![dag_view](dag_view.png)
+<img src="../img/ui/dag_view.png" width="900" height="400">
 
+---
 ### Tree View:
 
 A tree representation of the DAG that spans across time. If a pipeline is late, you can quickly see where the different steps are and identify the blocking ones.
 
-![tree_veiw](tree_veiw.png)
+<img src="../img/ui/tree_view.png" width="900" height="400">
 
+---
 ### Graph View:
 
 The graph view is perhaps the most comprehensive. Visualize your DAG's dependencies and their current status for a specific run.
 
-![graph_view](graph_view.png)
+<img src="../img/ui/graph_view.png" width="900" height="400">
 
-
+---
 
 ### Gantt Chart:
 
 The Gantt chart lets you analyse task duration and overlap. You can quickly identify bottlenecks and where the bulk of the time is spent for specific DAG runs.
 
-![gantt_charts](gantt_charts.png)
+<img src="../img/ui/gantt_charts.png" width="900" height="400">
 
+---
 ### Task Duration:
 
 The duration of your different tasks over the past N runs. This view lets you find outliers and quickly understand where the time is spent in your DAG over many runs.
 
-![task_duration](task_duration.png)
+<img src="../img/ui/task_duration.png" width="900" height="400">
 
-
+---
 
 ### Landing Time:
 
 The total time spent by a task from the scheduling period including retries. (e.g.) take a `schedule_interval='@daily'` run that finishes at `2016-01-02 03:52:00` landing time is `3:52` (The task scheduled to start at 2016-01-02 00:00:00)
 
-![landing_times](landing_times.png)
+<img src="../img/ui/landing_times.png" width="900" height="400">
+
 
 ### Code View:
 
-![code_view](code_view.png)
-
+<img src="../img/ui/code_view.png" width="900" height="400">
 
 
 ### Task Instance Context Menu:

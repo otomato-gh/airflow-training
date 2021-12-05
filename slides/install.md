@@ -8,4 +8,27 @@ Checkout the training repository:
 
 Look at the docker-compose definition:
 
-`cat airflow/docker-compose.yml`
+`cat airflow/docker-compose.yaml`
+
+---
+# Running Airflow
+
+```bash
+cd ~/airflow-training/airflow
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+docker-compose up -d
+```
+Check the status of webserver:
+```bash
+docker-compose ps airflow-webserver
+```
+
+When you `airflow_airflow-webserver_1` shows:
+```
+State   
+-------------
+Up (healthy)
+```
+
+ - access the web server http:<your_machine_ip>:8080
+
