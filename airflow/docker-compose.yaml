@@ -56,6 +56,8 @@ x-airflow-common:
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: 'true'
+    AIRFLOW__WEBSERVER__WORKER_REFRESH_INTERVAL: 60
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
   volumes:
     - ./dags:/opt/airflow/dags
@@ -98,6 +100,7 @@ services:
   airflow-webserver:
     <<: *airflow-common
     command: webserver
+    hostname: webserver
     ports:
       - 8080:8080
     healthcheck:
@@ -114,6 +117,7 @@ services:
   airflow-scheduler:
     <<: *airflow-common
     command: scheduler
+    hostname: scheduler
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type SchedulerJob --hostname "$${HOSTNAME}"']
       interval: 10s
@@ -128,6 +132,7 @@ services:
   airflow-worker:
     <<: *airflow-common
     command: celery worker
+    hostname: worker
     healthcheck:
       test:
         - "CMD-SHELL"
@@ -149,6 +154,7 @@ services:
   airflow-triggerer:
     <<: *airflow-common
     command: triggerer
+    hostname: triggerer
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
       interval: 10s
