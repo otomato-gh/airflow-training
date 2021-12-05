@@ -30,5 +30,5 @@ State
 Up (healthy)
 ```
 
- - access the web server http:<your_machine_ip>:8080
+ - access the web server http://your.machine.ip:8080
 

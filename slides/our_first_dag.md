@@ -116,6 +116,8 @@ If you don't want to wait - you can restart the scheduler, worker and webserver:
 docker-compose restart airflow-scheduler airflow-webserver airflow-worker
 ```
 
+In about a minute - you should see the DAG appear in the 'DAGs' view of the UI.
+
 ---
 
 ## Running the DAG
