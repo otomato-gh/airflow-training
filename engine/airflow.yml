@@ -1,0 +1,16 @@
+title: |
+  Automate Data Pipelines with Apache Airflow
+  
+gitrepo: github.com/otomato-gh/airflow-training
+
+slides: https://devopstrain.pro/airflow
+
+content:
+- ../slides/intro.md
+- ../slides/concepts.md
+- ../slides/install.md
+- ../slides/ui.md
+- ../slides/scheduler.md
+- ../slides/operators.md
+- ../slides/advanced_concepts.md
+- ../slides/sla_and_alerting.md
