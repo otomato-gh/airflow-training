@@ -39,8 +39,9 @@ The name of the environment variable is constructed as follows:
 `AIRFLOW__{SECTION}__{KEY}` (note the double underscores)
 
 E.g for the DAG file folder:
+
 airflow.cfg : 
-```
+```bash
 [core]  #section name
 dags_folder = /opt/airflow/dags #key name
 ```
@@ -150,6 +151,24 @@ Let's add another task (and also check where our tasks run)
 
 Wait for the scheduler to pick it up.
 
-Run the DAG again
+(Click on DAG->Links->Code)
 
 ---
+
+## Defining Task Relationships
+
+Let's see how to trigger the DAG from cli.
+
+`docker-compose exec airflow-webserver airflow dags trigger first`
+
+```
+Created <DagRun first ....
+```
+
+Wait for it to return and go to UI - DAG Runs -> Click on last manual execution:
+
+<img src="../img/2tasks.png" width="300" height="100">
+
+See how `t2` got executed before `t1`
+
+This is the result of ` t2 >> t1 ` !

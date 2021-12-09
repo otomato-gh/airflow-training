@@ -23,7 +23,7 @@ Check the status of webserver:
 docker-compose ps airflow-webserver
 ```
 
-When you `airflow_airflow-webserver_1` shows:
+When your `airflow_airflow-webserver_1` shows:
 ```
 State   
 -------------

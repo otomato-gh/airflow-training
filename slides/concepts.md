@@ -116,16 +116,20 @@ Some popular sensors are:
 
 ### Task Instances
 
-A task instance represents a specific run of a task and is characterized as the combination of a dag, a task, and a point in time. 
+A task instance represents a specific run of a task and is the combination of a dag, a task, and a point in time. 
 
-Task instances also have an indicative state, which could be:
+Task instances also have an indicative state, which could be on of:
 
  `running`, `success`, `failed`, `skipped`, `up for retry`, etc.
 
 ---
 ### DAG Runs:
 
-A DAG Run is an object representing an instantiation of the DAG in time. DAG runs have a state associated to them (`running`, `failed`, `success`) and informs the scheduler on which set of schedules should be evaluated for task submissions. Without the metadata at the DAG run level, the Airflow scheduler would have much more work to do in order to figure out what tasks should be triggered and come to a crawl.
+A DAG Run is an object representing an instantiation of the DAG in time. 
+
+A DAG may or may not have a schedule, which informs how DAG Runs are created. 
+
+`schedule_interval` is defined as a DAG argument, which can be passed a cron expression as a `str`, a `datetime.timedelta` object, or one of the following cron "presets":
 
 *Preset Crons:*
 
