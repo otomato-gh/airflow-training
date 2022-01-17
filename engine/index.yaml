@@ -1,9 +1,0 @@
-- date: 2019-06-11
-  city: Berlin,
-  country: de
-  event: DevOpsCon
-  title: Deploy Microservices like a Ninja with Istio Service Mesh
-
-- title: Deploy Microservices like a Ninja with Istio Service Mesh
-  slides: istio.yml.html
-
