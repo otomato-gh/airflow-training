@@ -1,4 +1,4 @@
-# Advance Airflow Concepts
+# Advanced Airflow Concepts
 
 ### Airflow Hooks:
 

@@ -58,9 +58,13 @@ with DAG(
 
 ### So Many DagRuns
 
-Your scheduler should no be running multiple tasks. Definitely more than one every 2 minutes. Why?
+Your scheduler should now be running multiple tasks. Definitely more than one every 2 minutes. Why?
+
 --
-Well, basically the scheduler noq queued all the 2 minute intervals from the start of today. So depending on when your day started you should have anywhere between 0 and 720 DagRuns that need to happen.
+
+Well, basically the scheduler queued all the 2 minute intervals from the start of today. 
+
+So depending on when your day started you should have anywhere between 0 and 720 DagRuns that need to happen.
 
 Having such a long queue is a great opportunity to inspect our Celery executor.
 

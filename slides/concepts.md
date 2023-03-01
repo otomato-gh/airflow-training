@@ -41,7 +41,7 @@ snoop_dag = generate_dag()
 ---
 ## Tasks:
 
-A Task is the basic unit of execution in Airflow. Tasks are arranged into DAGs, and then have upstream and downstream dependencies set between them into order to express the order they should run in.
+A Task is the basic unit of execution in Airflow. Tasks are arranged into DAGs, and then have upstream and downstream dependencies set between them in order to express the order they should run in.
 
 There are three basic kinds of Task:
 

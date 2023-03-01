@@ -11,7 +11,7 @@ Look at the docker-compose definition:
 `cat airflow/docker-compose.yaml`
 
 ---
-# Running Airflow
+## Running Airflow
 
 ```bash
 cd ~/airflow-training/airflow
