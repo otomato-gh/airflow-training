@@ -87,7 +87,7 @@ Nothing here yet
 
 .exercise[
 ```bash
-cat <<<EOF >> ~/airflow-training/airflow/dags/myfirstdag.py
+cat << EOF >> ~/airflow-training/airflow/dags/myfirstdag.py
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.utils.dates import days_ago

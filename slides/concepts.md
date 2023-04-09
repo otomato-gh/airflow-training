@@ -131,8 +131,6 @@ A DAG may or may not have a schedule, which informs how DAG Runs are created.
 
 `schedule_interval` is defined as a DAG argument, which can be passed a cron expression as a `str`, a `datetime.timedelta` object, or one of the following cron "presets":
 
-*Preset Crons:*
-
 | preset     | meaning                                                         | cron        |
 | ---------- | --------------------------------------------------------------- | ----------- |
 | `None`     | Don't schedule, use for exclusively "externally triggered" DAGs |             |
@@ -142,5 +140,3 @@ A DAG may or may not have a schedule, which informs how DAG Runs are created.
 | `@weekly`  | Run once a week at midnight on Sunday morning                   | `0 0 * * 0` |
 | `@monthly` | Run once a month at midnight of the first day of the month      | `0 0 1 * *` |
 | `@yearly`  | Run once a year at midnight of January 1                        | `0 0 1 1 *` |
-
-![airflow_concepts](airflow_concepts.png)

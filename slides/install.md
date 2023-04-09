@@ -8,7 +8,10 @@ Checkout the training repository:
 
 Look at the docker-compose definition:
 
-`cat airflow/docker-compose.yaml`
+```bash
+cd airflow-training
+cat airflow/docker-compose.yaml
+```
 
 ---
 ## Running Airflow
@@ -31,4 +34,6 @@ Up (healthy)
 ```
 
  - access the web server http://your.machine.ip:8080
+
+ - log in with `airflow/ariflow`
 
