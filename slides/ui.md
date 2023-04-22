@@ -49,47 +49,54 @@ The total time spent by a task from the scheduling period including retries. (e.
 
 <img src="../img/ui/landing_times.png" width="900" height="400">
 
-
+---
 ### Code View:
 
 <img src="../img/ui/code_view.png" width="900" height="400">
 
 
+---
+
 ### Task Instance Context Menu:
 
 From the pages seen above (tree view, graph view, gantt, ...), it is always possible to click on a task instance, and get to this rich context menu that can take you to more detailed metadata, and perform some actions.
 
-![task_instance_view](task_instance_view.png)
+<img src="../img/ui/task_instance_view.png" width="900" height="400">
 
 
+---
+### Variables View:
 
-### Variable View:
+The variables view allows you to manage the key-value pairs of variables used during jobs. 
+alue of a variable is considered secret and hidden if the key is one of: 'password', 'secret', 'passwd', 'authorization', 'api\_key', 'apikey', 'access\_token'. It can be configured to show in clear-text.
 
-The variable view allows you to list, create, edit or delete the key-value pair of a variable used during jobs. Value of a variable will be hidden if the key contains any words in ('password', 'secret', 'passwd', 'authorization', 'api\_key', 'apikey', 'access\_token') by default, but can be configured to show in clear-text.
+<img src="../img/ui/variables.png" width="900" height="400">
 
-![variables](variables.png)
-
+---
 ### Browse View:
 
-Browse view help to build a more drill-down analysis and do bulk operations of Airflow core entities such as `DAG Runs`, `Task Instances`, `Logs`, `Jobs` & `SLA misses`.
+Browse view allows to drill-down and do bulk operations on Airflow core entities such as `DAG Runs`, `Task Instances`, `Logs`, `Jobs` & `SLA misses`.
 
-![browse](browse.png)
+<img src="../img/ui/browse.png" width="900" height="400">
 
-
-
+---
 ### Admin View:
 
-The Admin View help to configure airflow pool, connections, variables, and users.
+The Admin View allows to configure airflow pools, connections, variables, and users.
 
-![admin](admin.png)
+<img src="../img/ui/admin.png" width="900" height="400">
 
 
+
+---
 
 ### Airflow Cli Tools:
 
 Airflow has a very rich command line interface that allows for many types of operation on a DAG, starting services, and supporting development and testing.
 
-![airflow_cli](airflow_cli.png)
+<img src="../img/ui/airflow_cli.png" width="900" height="400">
+
+
 
 
 

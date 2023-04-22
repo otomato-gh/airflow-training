@@ -72,7 +72,7 @@ for i in range(10): # loop in to create dynamic operators.
 
 Allows a workflow to "branch" or follow a single path following the execution of this task.
 
-It derives the PythonOperator and expects a Python function that returns the task\_id to follow. The task\_id returned should point to a task directly downstream from {self}. All other `branches` or directly downstream tasks are marked with a state of `skipped` so that these paths can't move forward. The \`\`skipped\`\` states are propageted downstream to allow for the DAG state to fill up and the DAG run's state to be inferred. Note that using tasks with `depends_on_past=True` downstream from `BranchPythonOperator` is logically unsound as `skipped` status will invariably lead to block tasks that depend on their past successes.`skipped` states propagates where all directly upstream tasks are`skipped`.
+It derives the PythonOperator and expects a Python function that returns the task\_id to follow. The task\_id returned should point to a task directly downstream from {self}. All other `branches` or directly downstream tasks are marked with a state of `skipped` so that these paths can't move forward. The \`\`skipped\`\` states are propagated downstream to allow for the DAG state to fill up and the DAG run's state to be inferred. Note that using tasks with `depends_on_past=True` downstream from `BranchPythonOperator` is logically unsound as `skipped` status will invariably block tasks that depend on their past successes.`skipped` state propagates where all directly upstream tasks are`skipped`.
 
 ```python
 branching = BranchPythonOperator(
@@ -85,13 +85,9 @@ branching = BranchPythonOperator(
 
 ### Short Circuit Operators:
 
-Allows a workflow to continue only if a condition is met. Otherwise, the  
-workflow `short-circuits` and downstream tasks are skipped.  
+Allows a workflow to continue only if a condition is met. Otherwise, the workflow `short-circuits` and downstream tasks are skipped.  
 
-The ShortCircuitOperator is derived from the PythonOperator. It evaluates a  
-condition and short-circuits the workflow if the condition is False. Any  
-downstream tasks are marked with a state of `skipped`. If the condition is  
-True, downstream tasks proceed as normal.  
+The ShortCircuitOperator is derived from the PythonOperator. It evaluates a condition and short-circuits the workflow if the condition is False. Any downstream tasks are marked `skipped`. If the condition is `True`, downstream tasks proceed as normal.  
 
 The condition is determined by the result of `python_callable`.
 

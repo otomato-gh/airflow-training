@@ -2,9 +2,9 @@
 
 ### Airflow Hooks:
 
-Hooks meant as an interface to interact with external systems. Hooks handle the connection and interaction to specific instances of these systems, and expose consistent methods to interact with them.
+Hooks are an interface to interact with external systems. Hooks handle the connection and interaction to specific instances of these systems, and expose consistent methods to interact with them.
 
-Some of the inbuild hooks are,
+Some of the built-in hooks are,
 
 - HiveHook
 - mysql
@@ -12,34 +12,71 @@ Some of the inbuild hooks are,
 - oracle
 - http
 - Slack
+---
 
 #### Custom Hook:
 
 extend `BaseHook` class and override `get_conn`, `get_records`, `run` methods as needed
 
+---
+
 ### Connections:
 
-Connections store information about different external data sources instances connection information. The idea here is that scripts use references to database instances (conn_id) instead of hard-coding hostname, logins and passwords when using operators or hooks.
+Connections store information about external data sources and credentials to access them. 
+
+The idea here is that scripts use references to database instances (conn_id) instead of hard-coding hostname, logins and passwords when using operators or hooks.
+
+```python
+create_pet_table = PostgresOperator(
+    task_id="create_pet_table",
+    postgres_conn_id="postgres_default",
+    sql="sql/pet_schema.sql",
+)
+```
+
+---
 
 #### Airflow connections via Airflow UI
 
 ##### List all the connections:
 
-![22](22.png)
+<img src="../img/connection_create.png" width="900" height="400">
+---
 
 ##### Create a new connection:
 
-![48](48.png)
+<img src="../img/48.png" width="900" height="400">
 
-#### Airflow connections via environment variable (Recommended):
+---
 
-Airflow will consider any environment variable with the prefix `AIRFLOW_CONN`. (e.g) to set `S3_DEFAULT` connection, you can set the environment variable `AIRFLOW_CONN_S3_DEFAULT`
+#### Airflow connections via environment variable:
+
+Airflow will consider any environment variable with the prefix `AIRFLOW_CONN`.
+
+E.g:  to set `S3_DEFAULT` connection, you can set the environment variable `AIRFLOW_CONN_S3_DEFAULT`
+
+Example (for a db connection):
+```bash
+export AIRFLOW_CONN_MY_PROD_DATABASE='{
+    "conn_type": "my-conn-type",
+    "login": "my-login",
+    "password": "my-password",
+    "host": "my-host",
+    "port": 1234,
+    "schema": "my-schema",
+}'
+```
+---
 
 ### Variables:
 
 Variables are a generic way to store and retrieve arbitrary content or settings as a simple key-value store within Airflow.It is useful to set environment variable to pass across the pipeline.
 
-![04](04.png)
+<img src="../img/variables.png" width="900" height="400">
+
+---
+
+### Setting variables in code
 
 Apart from UI, we can set environment variable programmatically as well, 
 
@@ -47,22 +84,30 @@ Apart from UI, we can set environment variable programmatically as well,
 from airflow.models import Variable
 Variable.set("foo","value")
 foo = Variable.get("foo")
-Variable.set("bar",'{ "name":"John", "age":30, "city":"New York"}') # set json as a value
-bar = Variable.get("bar", deserialize_json=True) # deserialize json value
+## set json as a value
+Variable.set("bar",'{ "name":"John", "age":30, "city":"New York"}') 
+## deserialize json value
+bar = Variable.get("bar", deserialize_json=True) 
 ```
+
+---
 
 ### Macros & Templates:
 
-Airflow leverages the power of Jinja Templating, and this can be a powerful tool to use in combination with macros. Macros are a way to expose objects to your templates and live under the macros namespace in your templates.
+Airflow leverages the power of Jinja Templating, and this can be a powerful tool to use in combination with macros. 
 
-Airflow build-in macros: 
+Macros are a way to expose objects to your templates. 
+Macros reside in the `macros` namespace in your templates.
+
+Airflow built-in macros: 
 
 https://airflow.apache.org/code.html#macros
 
-Airflow build-in templates variables: 
+Airflow built-in templates variables: 
 
 https://airflow.apache.org/code.html#default-variables
 
+---
 ##### Custom airflow macros:
 
 Step 1: define the custom macro
@@ -84,6 +129,10 @@ dag = DAG(
 )
 ```
 
+---
+
+### Custom macros
+
 Step 3: Access using jinja template variables
 
 ```python
@@ -94,77 +143,26 @@ task = BashOperator(
         dag=dag)
 ```
 
+---
 ### XCom:
 
-XComs, or short for "cross-communication" are stores of key, value, and timestamps meant to communicate between tasks. XComs stored in Airflow's metadata database with an associated `execution_date`, `TaskInstance`, and `DagRun`.
+XComs, or short for "cross-communication" are stores of key, value, and timestamps meant to communicate between tasks. 
 
-XComs can be “pushed” (sent) or “pulled” (received). When a task pushes an XCom, it makes it generally available to other tasks. Tasks can push XComs at any time by calling the`xcom_push()`method.
+XComs are stored in Airflow's metadata database with an associated `execution_date`, `TaskInstance`, and `DagRun`.
 
-```python
-from __future__ import print_function
-import airflow
-from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
+XComs can be “pushed” (sent) or “pulled” (received). 
 
-args = {
-    'owner': 'airflow',
-    'start_date': airflow.utils.dates.days_ago(2),
-    'provide_context': True
-}
+When a task pushes an XCom, it makes it generally available to other tasks. Tasks can push XComs at any time by calling the`xcom_push()`method.
 
-dag = DAG(
-    'example_xcom',
-    schedule_interval="@once",
-    default_args=args)
+---
 
-value_1 = [1, 2, 3]
-value_2 = {'a': 'b'}
+### Xcom Example
 
+XComs are explicitly "pushed" and "pulled" to/from their storage using the `xcom_push` and `xcom_pull` methods on Task Instances. Many operators will auto-push their results into an XCom key called `return_value` if the `do_xcom_push` argument is set to `True` (as it is by default), and `@task` functions do this as well.
 
-def push(**kwargs):
-    # pushes an XCom without a specific target
-    kwargs['ti'].xcom_push(key='value from pusher 1', value=value_1)
-
-
-def push_by_returning(**kwargs):
-    # pushes an XCom without a specific target, just by returning it
-    return value_2
-
-
-def puller(**kwargs):
-    ti = kwargs['ti']
-
-    # get value_1
-    v1 = ti.xcom_pull(key=None, task_ids='push')
-    assert v1 == value_1
-
-    # get value_2
-    v2 = ti.xcom_pull(task_ids='push_by_returning')
-    assert v2 == value_2
-
-    # get both value_1 and value_2
-    v1, v2 = ti.xcom_pull(key=None, task_ids=['push', 'push_by_returning'])
-    assert (v1, v2) == (value_1, value_2)
-
-
-push1 = PythonOperator(
-    task_id='push', dag=dag, python_callable=push)
-
-push2 = PythonOperator(
-    task_id='push_by_returning', dag=dag, python_callable=push_by_returning)
-
-pull = PythonOperator(
-    task_id='puller', dag=dag, python_callable=puller)
-
-pull.set_upstream([push1, push2])
-```
-
-It is also possible to pull XCom directly in a template.
+`xcom_pull` defaults to using this key if no key is passed to it, meaning it's possible to write code like this:
 
 ```python
-{{ task_instance.xcom_pull(task_ids='push', key='value from pusher 1') }}
+ # Pulls the return_value XCOM from "pushing_task"
+value = task_instance.xcom_pull(task_ids='pushing_task')
 ```
-
-Further studies:
-
-https://www.astronomer.io/guides/airflow-datastores/
