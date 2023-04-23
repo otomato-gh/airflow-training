@@ -1,7 +1,7 @@
 
 # Introduction to Airflow
 
-![w:256, h:256](../img/airflow-svgrepo-com.svg)
+![w:300, h:300](../img/airflow-svgrepo-com.svg)
 
 ---
 ## What is Airflow?
