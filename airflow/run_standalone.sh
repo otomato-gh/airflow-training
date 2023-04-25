@@ -15,7 +15,8 @@ pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}
 
 export AIRFLOW__CORE__LOAD_EXAMPLES=False
 export AIRFLOW__CORE__DAGS_FOLDER=~/airflow-training/dags
-export PATH=${PATH}:~/.bin
+export PATH=${PATH}:~/.local/bin
 # The Standalone command will initialise the database, make a user,
 # and start all components for you.
 airflow standalone &
+airflow users  create --role Admin --username airflow --email airflow@otomato.io --firstname airflow --lastname airflow --password airflow
