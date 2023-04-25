@@ -1,5 +1,8 @@
 #! /bin/bash
 
+sudo apt update
+sudo apt install -y python3-pip
+
 export AIRFLOW_HOME=~/airflow-training/airflow
 
 # Install Airflow using the constraints file
