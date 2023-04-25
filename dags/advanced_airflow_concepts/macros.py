@@ -7,7 +7,7 @@ seven_days_ago = datetime.combine(datetime.today() - timedelta(7),
                                   datetime.min.time())
 
 default_args = {
-    'owner': 'ananth',
+    'owner': 'antweiss',
     'depends_on_past': False,
     'start_date': seven_days_ago,
     'email': ['airflow@airflow.com'],
@@ -17,7 +17,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-dag = DAG('tutorial', default_args=default_args)
+dag = DAG('macros', default_args=default_args)
 
 # t1, t2 and t3 are examples of tasks created by instatiating operators
 t1 = BashOperator(

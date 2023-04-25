@@ -8,7 +8,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow_sla_and_alerting.alerts import AlertManager
 
 args = {
-    'owner': 'ananth',
+    'owner': 'antweiss',
     'start_date': airflow.utils.dates.days_ago(7),
     'on_failure_callback': AlertManager.on_failure_callback,
     'on_retry_callback': AlertManager.on_retry_callback,
