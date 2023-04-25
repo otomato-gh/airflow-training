@@ -1,7 +1,7 @@
 import math
 
 from airflow.models import BaseOperator
-from airflow.utils import apply_defaults
+from airflow.utils.decorators import apply_defaults
 import logging
 from zipfile import ZipFile
 import os

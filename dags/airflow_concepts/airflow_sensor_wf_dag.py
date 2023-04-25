@@ -3,8 +3,7 @@ from datetime import timedelta, datetime
 
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
-from airflow.operators.sensors import ExternalTaskSensor
-
+from airflow.sensors.external_task import ExternalTaskSensor
 args = {
     'owner': 'airflow',
     'start_date': datetime(2018, 10, 20),
