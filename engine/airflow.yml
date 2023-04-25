@@ -2,6 +2,7 @@ title: |
   Apache Airflow Fundamentals
 
 
+
   
 gitrepo: github.com/otomato-gh/airflow-training
 
@@ -15,6 +16,7 @@ content:
 - ../slides/ui.md
 - ../slides/our_first_dag.md
 - ../slides/scheduler.md
+- ../slides/templates.md
 - ../slides/operators.md
 - ../slides/advanced_concepts.md
 - ../slides/sla_and_alerting.md

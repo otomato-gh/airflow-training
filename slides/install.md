@@ -35,5 +35,5 @@ Up (healthy)
 
  - access the web server http://your.machine.ip:8080
 
- - log in with `airflow/ariflow`
+ - log in with `airflow/airflow`
 

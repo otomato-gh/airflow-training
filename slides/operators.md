@@ -37,7 +37,7 @@ Transfer Operators move data between systems such as from Hive to Mysql or from 
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
 | dag                         | a reference to the dag the task is attached to                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Mandatory param        |
 | task_id                     | a unique, meaningful id for the task                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Mandatory param        |
-| email                       | email to send notification if any                                    | Mandatory param        |                                                                                                                                                                                                                                                                                                             
+| trigger_rule                       | defines the rule by which dependencies are applied for the task to get triggered                                    | Mandatory param        |                                                                                                                                                                                                                                                                                                             
 ---
 ### Bash Operators:
 
@@ -80,6 +80,52 @@ branching = BranchPythonOperator(
     python_callable=lambda: random.choice(options),
     dag=dag)
 ```
+
+---
+
+### Branch Operators 
+
+.exercise[
+- Execute the `example_branch_operator` DAG
+
+- Check the execution graph
+
+- Notice how the `join` task got skipped
+
+- Why?
+
+]
+
+---
+
+
+### A Side-note: trigger_rules
+
+All operators define a `trigger_rule` property with the default value set to `all_success`
+
+All possible values: `{ all_success | all_failed | all_done | one_success | one_failed | dummy}`
+
+`trigger_rule` helps us when using the BranchPythonOperator
+
+
+---
+
+### Fixing the trigger_rule
+
+.exercise[
+Change the file `~/airflow-training/dags/airflow-operators/branch.py` :
+
+```python
+join = DummyOperator(
+    task_id='join',
+    trigger_rule='one_success',
+    dag=dag
+)
+```
+
+Rerun the DAG and make sure `join` is now executed as expected.
+
+]
 
 ---
 
