@@ -1,4 +1,4 @@
-from advance_airflow_concepts.slack_hook import SlackWebhookImpl
+from advanced_airflow_concepts.slack_hook import SlackWebhookImpl
 
 
 class AlertManager:
