@@ -108,6 +108,7 @@ Airflow built-in templates variables:
 https://airflow.apache.org/code.html#default-variables
 
 ---
+
 ##### Custom airflow macros:
 
 Step 1: define the custom macro

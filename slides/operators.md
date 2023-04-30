@@ -147,6 +147,23 @@ cond_false = ShortCircuitOperator(
 
 ---
 
+### Exercise - Short Circuit Operator
+
+- Based on the example of `airflow_operators/short_circuit.py`
+
+- Please create your own DAG with a python function that randomly returns `true | false`
+
+- Create a ShortCircuitOperator that uses that function and either continues the execution to next task or stops the workflow.
+
+- Downstream task:
+```python
+BashOperator(
+        task_id='show_weather',
+        bash_command='curl wttr.in/israel',
+    )
+```
+---
+
 ### Running individual tasks:
 
 ```bash
