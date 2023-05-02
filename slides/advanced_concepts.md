@@ -1,8 +1,10 @@
 # Advanced Airflow Concepts
-
+---
 ### Airflow Hooks:
 
 Hooks are an interface to interact with external systems. Hooks handle the connection and interaction to specific instances of these systems, and expose consistent methods to interact with them.
+
+Hooks abstract away a lot of boilerplate code and serve as a building block for Airflow operators. Airflow operators, then, do the actual work of fetching or transforming data
 
 Some of the built-in hooks are,
 
@@ -68,6 +70,83 @@ export AIRFLOW_CONN_MY_PROD_DATABASE='{
 ```
 ---
 
+### Exercise - Connections and Hooks
+
+- Let's create a PostgreSQL DB
+
+```bash
+sudo docker run -v ~/airflow-training:/data --name my-postgres -e POSTGRES_PASSWORD=otomato \
+ -d  -p 5432:5432 postgres
+
+ # And create a table:
+sudo docker exec -it some-postgres psql -h localhost -U postgres
+
+ # And populate it
+CREATE TABLE customer(
+    id serial,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(50)
+);
+
+exit
+```
+---
+
+### Exercise - Connections and Hooks
+
+- Now let's create a connection:
+- In UI go to Admin -> Connections
+- Find the `postgres_default`
+- Fill it out:
+    - "conn_type": "Postgres"
+    - "login": "postgres"
+    - "password": "otomato"
+    - "host": "localhost"
+    - "port": 5432
+    - "schema": "postgres"
+- Test the connection by clicking on `Test`
+
+---
+
+### Exercise - Connections and Hooks
+
+- Create a CSV file `~/airflow-training/customers.csv` using the format below:
+```csv
+serial,first_name,last_name,email
+1,john,michael,john@gmail.com
+2,mary,cooper,mcooper@gmail.com
+3,sheldon,cooper,scooper@gmail.com
+4,john,michael,john@gmail.com
+5,mary,cooper,mcooper@gmail.com
+6,sheldon,cooper,scooper@gmail.com
+```
+
+---
+
+### Populate the DB table from the file
+```bash
+sudo docker exec -it some-postgres psql -h localhost -U postgres
+
+COPY customer FROM '/data/customers.csv' DELIMITER ',' CSV HEADER;
+
+exit
+```
+
+---
+
+### Run the DAG
+
+- Find the DAG named `pg_extract`
+
+- Inspect the code
+
+- Trigger DAG
+
+- Check file `~/airflow-training/customers-ex.csv`
+
+---
+
 ### Variables:
 
 Variables are a generic way to store and retrieve arbitrary content or settings as a simple key-value store within Airflow.It is useful to set environment variable to pass across the pipeline.
@@ -88,60 +167,6 @@ foo = Variable.get("foo")
 Variable.set("bar",'{ "name":"John", "age":30, "city":"New York"}') 
 ## deserialize json value
 bar = Variable.get("bar", deserialize_json=True) 
-```
-
----
-
-### Macros & Templates:
-
-Airflow leverages the power of Jinja Templating, and this can be a powerful tool to use in combination with macros. 
-
-Macros are a way to expose objects to your templates. 
-Macros reside in the `macros` namespace in your templates.
-
-Airflow built-in macros: 
-
-https://airflow.apache.org/code.html#macros
-
-Airflow built-in templates variables: 
-
-https://airflow.apache.org/code.html#default-variables
-
----
-
-##### Custom airflow macros:
-
-Step 1: define the custom macro
-
-```python
-CUSTOM_MACROS = {
-  'echo': lambda id: 'echo ' + id
-}
-```
-
-Step 2: configure the macro in the airflow dag definition
-
-```python
-dag = DAG(
-    dag_id='example_bash_operator', default_args=args,
-    schedule_interval='0 0 * * *',
-    dagrun_timeout=timedelta(minutes=60),
-    user_defined_macros=CUSTOM_MACROS # user defined macros added to the dag context
-)
-```
-
----
-
-### Custom macros
-
-Step 3: Access using jinja template variables
-
-```python
-CMD ='{{echo("joe")}}'
-task = BashOperator(
-        task_id='runme',
-        bash_command=CMD,
-        dag=dag)
 ```
 
 ---
