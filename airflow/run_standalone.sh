@@ -12,6 +12,7 @@ PYTHON_VERSION="$(python3 --version | cut -d " " -f 2 | cut -d "." -f 1-2)"
 CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
 # For example: https://raw.githubusercontent.com/apache/airflow/constraints-2.5.3/constraints-3.7.txt
 pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
+pip install apache-airflow-providers-postgres==5.4.0
 
 export AIRFLOW__CORE__LOAD_EXAMPLES=False
 export AIRFLOW__CORE__DAGS_FOLDER=~/airflow-training/dags
