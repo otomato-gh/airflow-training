@@ -16,6 +16,8 @@ pip install apache-airflow-providers-postgres==5.4.0
 
 export AIRFLOW__CORE__LOAD_EXAMPLES=False
 export AIRFLOW__CORE__DAGS_FOLDER=~/airflow-training/dags
+export AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL=60
+export AIRFLOW__CORE__EXPOSE_CONFIG=True
 export PATH=${PATH}:~/.local/bin
 # The Standalone command will initialise the database, make a user,
 # and start all components for you.
