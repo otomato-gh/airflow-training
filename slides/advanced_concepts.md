@@ -42,7 +42,7 @@ create_pet_table = PostgresOperator(
 
 ##### List all the connections:
 
-<img src="../img/connection_create.png" width="900" height="400">
+<img src="../img/connection_create.png" width="800" height="350">
 ---
 
 ##### Create a new connection:
@@ -151,7 +151,7 @@ exit
 
 Variables are a generic way to store and retrieve arbitrary content or settings as a simple key-value store within Airflow.It is useful to set environment variable to pass across the pipeline.
 
-<img src="../img/variables.png" width="900" height="400">
+<img src="../img/variables.png" width="800" height="300">
 
 ---
 

@@ -14,7 +14,7 @@ cat airflow/docker-compose.yaml
 ```
 
 ---
-## Running Airflow
+## Running Airflow - Distributed Simulation (docker)
 
 ```bash
 cd ~/airflow-training/airflow
@@ -37,3 +37,19 @@ Up (healthy)
 
  - log in with `airflow/airflow`
 
+---
+
+### Running Airflow (standalone)
+
+```bash
+cd ~/airflow-training/airflow
+./run_standalone.sh
+```
+
+Once Airflow is up you will see:
+```bash
+standalone | Airflow is ready
+standalone | Login with username: admin  password: EsF5Xt9HguBXBhWZ
+```
+
+Use the credentials shown or `airflow/airflow`
