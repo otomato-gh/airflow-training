@@ -2,13 +2,13 @@ from datetime import datetime,timedelta
 
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
-
+from airflow.utils.dates import days_ago
 """
 ### Hello world dag
 """
 args = {
     'owner': 'airflow',
-    'start_date': datetime(2018, 10, 20),
+    'start_date': days_ago(0),
     'depends_on_past': False,
     'email_on_failure': False,
     'email_on_retry': False,

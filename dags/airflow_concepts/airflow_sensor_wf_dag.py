@@ -4,9 +4,11 @@ from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.sensors.external_task import ExternalTaskSensor
+from airflow.utils.dates import days_ago
+
 args = {
     'owner': 'airflow',
-    'start_date': datetime(2018, 10, 20),
+    'start_date': days_ago(0),
     'depends_on_past': False,
     'email_on_failure': False,
     'email_on_retry': False,
